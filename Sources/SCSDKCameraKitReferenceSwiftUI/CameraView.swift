@@ -23,9 +23,10 @@ public struct CameraView: View {
 
     public var body: some View {
         ZStack {
+            // MARK: TODO: Decided the best way to deal with removing the double tap flip camera action
             PreviewView(cameraKit: cameraController.cameraKit)
                 .edgesIgnoringSafeArea(.all)
-                .onTapGesture(count: 2, perform: cameraController.flipCamera)
+                // .onTapGesture(count: 2, perform: cameraController.flipCamera) // Camera UI Settings: We don't want to be able to flip camera on double tap
                 .gesture(
                     MagnificationGesture(minimumScaleDelta: 0)
                         .onChanged(cameraController.zoomExistingLevel(by:))
@@ -33,6 +34,7 @@ public struct CameraView: View {
                             cameraController.finalizeZoom()
                         })
             VStack {
+                // MARK: TODO: We'll most likely want to manually add the name of the lens here based on which lens we use (through singleton/enum thing)
                 LensHeader(
                     lensName: cameraController.currentLens?.name ?? "", flipCameraAction: cameraController.flipCamera
                 )
@@ -42,7 +44,8 @@ public struct CameraView: View {
                 )
                 Spacer()
                 MediaPickerView(provider: cameraController.lensMediaProvider)
-                LensFooter(state: state, cameraController: cameraController)
+                // MARK: TODO: Decide what to do with footer and elements
+                // LensFooter(state: state, cameraController: cameraController)
             }
             HintView(hint: state.hint)
             ProgressView()
@@ -78,12 +81,15 @@ struct LensHeader: View {
                 .frame(alignment: .center)
                 .font(.headline)
                 .foregroundColor(.white)
+            // MARK: TODO: Decided the best way to deal with removing the flipCameraAction
+            /*
             HStack {
                 Spacer()
                 Button(action: flipCameraAction) {
                     Image("ck_camera_flip", bundle: BundleHelper.resourcesBundle)
                 }
             }
+             */
         }.padding()
     }
 }

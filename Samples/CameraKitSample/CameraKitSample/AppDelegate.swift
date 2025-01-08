@@ -9,8 +9,8 @@ import SCSDKCreativeKit
     import SCSDKLoginKit
 #endif
 // Reenable if using SwiftUI reference UI
-//import SCSDKCameraKitReferenceSwiftUI
-//import SwiftUI
+import SCSDKCameraKitReferenceSwiftUI
+import SwiftUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SnapchatDelegate {
@@ -60,15 +60,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SnapchatDelegate {
         // approved in production and/or your Snapchat username is allowlisted in SnapKit dashboard.
         // See https://docs.snap.com/snap-kit/creative-kit/Tutorials/ios
         cameraController.snapchatDelegate = self
-        let cameraViewController = CustomizedCameraViewController(cameraController: cameraController, debugStore: debugStore)
-        cameraViewController.appOrientationDelegate = self
-        window?.rootViewController = cameraViewController
+        // NOTE: Changed to test with Swift UI 
+//        let cameraViewController = CustomizedCameraViewController(cameraController: cameraController, debugStore: debugStore)
+//        cameraViewController.appOrientationDelegate = self
+//        window?.rootViewController = cameraViewController
         
 //        If your application has a deployment target of 14.0 or higher, CameraKit Reference UI
 //        supports a preview SwiftUI implementation.
-//        let view = CameraView(cameraController: cameraController)
-//        let cameraViewController = UIHostingController(rootView: view)
-//        window?.rootViewController = cameraViewController
+        let view = CameraView(cameraController: cameraController)
+        let cameraViewController = UIHostingController(rootView: view)
+        window?.rootViewController = cameraViewController
         
         window?.makeKeyAndVisible()
 
