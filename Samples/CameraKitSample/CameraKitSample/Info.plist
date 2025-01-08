@@ -55,7 +55,7 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>CameraKit Sample uses photo library to save captured photos and recorded videos</string>
 	<key>SCCameraKitAPIToken</key>
-	<string>REPLACE-THIS-WITH-YOUR-OWN-APP-SPECIFIC-VALUE</string>
+	<string>eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzM2MzA0NDM5LCJzdWIiOiIwZTcwYmU5ZS1lODZiLTRhN2EtYWE2ZS0yYTFlZmM5NTIyYmZ-U1RBR0lOR35lNTZkZTNkZi1iOTJmLTRkYjQtOWI3MC00NzhjZjM3ZGNlMDEifQ.BGHt1Q1aer3LrmUw8dJgQc7sa0YN4oAr4GWlVSJlCd4</string>
 	<key>SCSDKClientId</key>
 	<string>REPLACE-THIS-WITH-YOUR-OWN-APP-SPECIFIC-VALUE</string>
 	<key>SCSDKRedirectUrl</key>
