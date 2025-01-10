@@ -4,12 +4,26 @@ import SCSDKCameraKit
 import SCSDKCameraKitReferenceUI
 import SwiftUI
 
+// MARK: My code that I should probably move
 struct CameraLensConfiguration {
     static var headerEnabled: Bool = true
     static var footerEnabled: Bool = true
-    static var doubleTapFlipEnabled: Bool = false
+    static var gesturesEnabled: Bool = true
+    static var lensPosition = AVCaptureDevice.Position.back
 }
 
+extension View {
+    @ViewBuilder
+    func `if`<Content: View>(_ condition: Bool, apply: (Self) -> Content) -> some View {
+        if condition {
+            apply(self)
+        } else {
+            self
+        }
+    }
+}
+
+// MARK: Camera Kit code
 @available(iOS 14.0, *)
 /// A sample implementation of a minimal SwiftUI view for a CameraKit camera experience.
 public struct CameraView: View {
@@ -31,17 +45,17 @@ public struct CameraView: View {
         ZStack {
             PreviewView(cameraKit: cameraController.cameraKit)
                 .edgesIgnoringSafeArea(.all)
-                .onTapGesture(count: 2) {
-                    if CameraLensConfiguration.doubleTapFlipEnabled {
-                        cameraController.flipCamera()
-                    }
+                .if(CameraLensConfiguration.gesturesEnabled) { view in
+                    view
+                        .onTapGesture(count: 2, perform: cameraController.flipCamera)
+                        .gesture(
+                            MagnificationGesture(minimumScaleDelta: 0)
+                                .onChanged(cameraController.zoomExistingLevel(by:))
+                                .onEnded { _ in
+                                    cameraController.finalizeZoom()
+                                }
+                        )
                 }
-                .gesture(
-                    MagnificationGesture(minimumScaleDelta: 0)
-                        .onChanged(cameraController.zoomExistingLevel(by:))
-                        .onEnded { _ in
-                            cameraController.finalizeZoom()
-                        })
             VStack {
                 if CameraLensConfiguration.headerEnabled {
                     LensHeader(
@@ -63,6 +77,9 @@ public struct CameraView: View {
                 .opacity(state.loading ? 1 : 0)
         }.onAppear {
             state.cameraController = cameraController
+            if cameraController.cameraPosition != CameraLensConfiguration.lensPosition {
+                cameraController.flipCamera()
+            }
         }
         .sheet(item: $state.captured, onDismiss: cameraController.reapplyCurrentLens) { item in
             switch item {
