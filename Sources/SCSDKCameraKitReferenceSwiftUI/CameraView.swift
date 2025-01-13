@@ -4,12 +4,14 @@ import SCSDKCameraKit
 import SCSDKCameraKitReferenceUI
 import SwiftUI
 
-// MARK: My code that I should probably move
+// MARK: TODO: My code that I should probably move
 struct CameraLensConfiguration {
-    static var headerEnabled: Bool = true
-    static var footerEnabled: Bool = true
-    static var gesturesEnabled: Bool = true
-    static var lensPosition = AVCaptureDevice.Position.back
+    static let lensID: String = "43281170875"
+    static let groupID: String = "948c8845-8e75-48ea-9ecc-6e04d515f5d9"
+    static let headerEnabled: Bool = true
+    static let footerEnabled: Bool = true
+    static let gesturesEnabled: Bool = true
+    static let lensPosition = AVCaptureDevice.Position.back 
 }
 
 extension View {
@@ -80,6 +82,7 @@ public struct CameraView: View {
             if cameraController.cameraPosition != CameraLensConfiguration.lensPosition {
                 cameraController.flipCamera()
             }
+            cameraController.setLens(lensID: CameraLensConfiguration.lensID, groupID: CameraLensConfiguration.groupID)
         }
         .sheet(item: $state.captured, onDismiss: cameraController.reapplyCurrentLens) { item in
             switch item {
