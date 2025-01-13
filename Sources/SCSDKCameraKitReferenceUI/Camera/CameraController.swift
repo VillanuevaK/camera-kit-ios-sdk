@@ -66,7 +66,7 @@ public protocol CameraControllerUIDelegate: AnyObject {
 
 /// A controller which manages the camera and lenses stack on behalf of its owner
 open class CameraController: NSObject, LensRepositoryGroupObserver, LensPrefetcherObserver, LensHintDelegate,
-                             MediaPickerViewDelegate, AdjustmentControlViewDelegate, LensRepositorySpecificObserver
+                            MediaPickerViewDelegate, AdjustmentControlViewDelegate, LensRepositorySpecificObserver
 {
     // MARK: - Public API
 
@@ -122,7 +122,6 @@ open class CameraController: NSObject, LensRepositoryGroupObserver, LensPrefetch
             for group in addedIDs {
                 cameraKit.lenses.repository.addObserver(self, groupID: group)
             }
-            
             // you can also observe a single lens in a group if you only care about a specific lens
             // cameraKit.lenses.repository.cameraKit.lenses.repository.addObserver(self, specificLensID: "123", groupID: "1")
             // and then get the lens after by calling
@@ -398,6 +397,7 @@ open class CameraController: NSObject, LensRepositoryGroupObserver, LensPrefetch
     }
 
     // MARK: LensRepositoryGroupObserver
+    
     open func repository(_ repository: LensRepository, didUpdateLenses lenses: [Lens], forGroupID groupID: String) {
         // prefetch lens content (don't prefetch bundled since content is local already)
         if !groupID.contains(SCCameraKitLensRepositoryBundledGroup) {
