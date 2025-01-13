@@ -66,7 +66,7 @@ public protocol CameraControllerUIDelegate: AnyObject {
 
 /// A controller which manages the camera and lenses stack on behalf of its owner
 open class CameraController: NSObject, LensRepositoryGroupObserver, LensPrefetcherObserver, LensHintDelegate,
-    MediaPickerViewDelegate, AdjustmentControlViewDelegate
+                             MediaPickerViewDelegate, AdjustmentControlViewDelegate, LensRepositorySpecificObserver
 {
     // MARK: - Public API
 
@@ -79,7 +79,7 @@ open class CameraController: NSObject, LensRepositoryGroupObserver, LensPrefetch
     public let cameraKit: CameraKitProtocol
 
     /// The position of the camera.
-    public private(set) var cameraPosition: AVCaptureDevice.Position = .front {
+    public private(set) var cameraPosition: AVCaptureDevice.Position = .back {
         didSet {
             cameraKit.cameraPosition = cameraPosition
         }
@@ -122,6 +122,7 @@ open class CameraController: NSObject, LensRepositoryGroupObserver, LensPrefetch
             for group in addedIDs {
                 cameraKit.lenses.repository.addObserver(self, groupID: group)
             }
+            
             // you can also observe a single lens in a group if you only care about a specific lens
             // cameraKit.lenses.repository.cameraKit.lenses.repository.addObserver(self, specificLensID: "123", groupID: "1")
             // and then get the lens after by calling
@@ -378,9 +379,25 @@ open class CameraController: NSObject, LensRepositoryGroupObserver, LensPrefetch
             cameraKit.add(output: photoCaptureOutput)
         }
     }
+    
+    // MARK: Kevin: [Custom Code]
+    // MARK: LensRepositorySpecifcObserver
+    public func repository(_ repository: LensRepository, didUpdate lens: Lens, forGroupID groupID: String) {
+        applyLens(lens)
+    }
+    
+    public func repository(_ repository: LensRepository, didFailToUpdateLensID lensID: String, forGroupID groupID: String, error: Error?) {
+        if let error {
+            print("Did fail to update lens: \(error.localizedDescription)")
+        }
+    }
+    
+    public func setLens(lensID: String, groupID: String) {
+        cameraKit.lenses.repository.addObserver(self, specificLensID: lensID, inGroupID: groupID)
+        cameraKit.lenses.repository.lens(id: lensID, groupID: groupID)
+    }
 
     // MARK: LensRepositoryGroupObserver
-
     open func repository(_ repository: LensRepository, didUpdateLenses lenses: [Lens], forGroupID groupID: String) {
         // prefetch lens content (don't prefetch bundled since content is local already)
         if !groupID.contains(SCCameraKitLensRepositoryBundledGroup) {
