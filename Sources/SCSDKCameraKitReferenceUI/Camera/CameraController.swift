@@ -397,7 +397,6 @@ open class CameraController: NSObject, LensRepositoryGroupObserver, LensPrefetch
     }
 
     // MARK: LensRepositoryGroupObserver
-    
     open func repository(_ repository: LensRepository, didUpdateLenses lenses: [Lens], forGroupID groupID: String) {
         // prefetch lens content (don't prefetch bundled since content is local already)
         if !groupID.contains(SCCameraKitLensRepositoryBundledGroup) {
