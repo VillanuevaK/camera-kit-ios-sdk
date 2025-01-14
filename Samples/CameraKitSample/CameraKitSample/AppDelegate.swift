@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SnapchatDelegate {
 
     private enum Constants {
         // TODO: This is where the group is set up... - decide if we'll move this - we probaby dont need this if we just call individual lenses
+        // If updating the group is giving you problems check the note in debug store
         static let partnerGroupId = "948c8845-8e75-48ea-9ecc-6e04d515f5d9"
     }
 
@@ -33,8 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SnapchatDelegate {
     }()
     private let debugStore: (any DebugStoreProtocol)? = {
         if #available(iOS 13, *) {
-            // MARK: TODO: Look into why commenting this out makes the group ID's appear here? maybe this does this to replace where the library is being used vs directly having things here?
-            return nil // DebugStore(defaultGroupIDs: [SCCameraKitLensRepositoryBundledGroup, Constants.partnerGroupId])
+            return DebugStore(defaultGroupIDs: [SCCameraKitLensRepositoryBundledGroup, Constants.partnerGroupId])
         } else {
             return nil
         }

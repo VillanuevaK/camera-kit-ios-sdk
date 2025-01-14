@@ -31,6 +31,12 @@ class DebugStore: ObservableObject, DebugStoreProtocol {
         self.defaultGroupIDs = defaultGroupIDs
         assert(apiToken != "REPLACE-THIS-WITH-YOUR-OWN-APP-SPECIFIC-VALUE", "Please specify API Token in Info.plist (SCCameraKitAPIToken)")
         apiToken = UserDefaults.standard.string(forKey: Constants.apiTokenDefaultsKey) ?? apiToken
+        /* 
+            Note: 
+            If you have issues with group ID updating properly, it maybe because the defaults is not updating correctly.
+            You can check for a different result by just having groupIDs = defaultGroupIDs
+            Last time I made lensGroupIDsDefaultsKey = "" ran and unran it and then the groups started showing up...
+         */
         groupIDs = UserDefaults.standard.stringArray(forKey: Constants.lensGroupIDsDefaultsKey) ?? defaultGroupIDs
         $apiToken.sink { newValue in
             UserDefaults.standard.set(newValue, forKey: Constants.apiTokenDefaultsKey)
