@@ -2,6 +2,11 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+### My changes start here:
+Samples/CameraKitSample/CameraKitSample/Info.plist
+Samples/CameraKitSample/CameraKitSample/StagingConfig.xcconfig
+### My changes end here
+
 ## User settings
 xcuserdata/
 
