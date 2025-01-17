@@ -16,9 +16,9 @@ import SwiftUI
 class AppDelegate: UIResponder, UIApplicationDelegate, SnapchatDelegate {
 
     private enum Constants {
-        // TODO: This is where the group is set up... - decide if we'll move this - we probaby dont need this if we just call individual lenses
         // If updating the group is giving you problems check the note in debug store
-        static let partnerGroupId = "948c8845-8e75-48ea-9ecc-6e04d515f5d9"
+        // This sets up the group in the carousel which may not be needed if we just want individual lenses
+        static let partnerGroupId = ApplicationInfo.groupId!
     }
 
     var window: UIWindow?
@@ -63,12 +63,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SnapchatDelegate {
         // See https://docs.snap.com/snap-kit/creative-kit/Tutorials/ios
         cameraController.snapchatDelegate = self
         // NOTE: Changed to test with Swift UI 
-//        let cameraViewController = CustomizedCameraViewController(cameraController: cameraController, debugStore: debugStore)
-//        cameraViewController.appOrientationDelegate = self
-//        window?.rootViewController = cameraViewController
+        // let cameraViewController = CustomizedCameraViewController(cameraController: cameraController, debugStore: debugStore)
+        // cameraViewController.appOrientationDelegate = self
+        // window?.rootViewController = cameraViewController
         
-//        If your application has a deployment target of 14.0 or higher, CameraKit Reference UI
-//        supports a preview SwiftUI implementation.
+        // If your application has a deployment target of 14.0 or higher, CameraKit Reference UI
+        // supports a preview SwiftUI implementation.
         let view = CameraView(cameraController: cameraController)
         let cameraViewController = UIHostingController(rootView: view)
         window?.rootViewController = cameraViewController

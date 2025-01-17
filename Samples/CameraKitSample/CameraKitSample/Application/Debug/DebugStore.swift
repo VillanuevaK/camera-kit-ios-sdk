@@ -30,8 +30,15 @@ class DebugStore: ObservableObject, DebugStoreProtocol {
     init(defaultGroupIDs: [String]) {
         self.defaultGroupIDs = defaultGroupIDs
         assert(apiToken != "REPLACE-THIS-WITH-YOUR-OWN-APP-SPECIFIC-VALUE", "Please specify API Token in Info.plist (SCCameraKitAPIToken)")
+        /*
+           Note:
+           If the App ID does not update properly, it may be due to UserDefaults caching an outdated value.
+           To fix this, comment out the line that retrieves the token from UserDefaults:
+           UserDefaults.standard.string(forKey: Constants.apiTokenDefaultsKey)
+           This forces the subscriber to notice the change and update the saved value in UserDefaults.
+        */
         apiToken = UserDefaults.standard.string(forKey: Constants.apiTokenDefaultsKey) ?? apiToken
-        /* 
+        /*
             Note: 
             If you have issues with group ID updating properly, it maybe because the defaults is not updating correctly.
             You can check for a different result by just having groupIDs = defaultGroupIDs

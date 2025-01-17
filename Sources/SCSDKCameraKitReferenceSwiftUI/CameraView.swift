@@ -7,6 +7,7 @@ import SwiftUI
 // MARK: TODO: My code that I should probably move
 struct CameraLensConfiguration {
     static let lensID: String = "43281170875"
+    // May be worth using the plist version since presumably all the lenses would have the same group ID for now...
     static let groupID: String = "948c8845-8e75-48ea-9ecc-6e04d515f5d9"
     static let headerEnabled: Bool = true
     static let footerEnabled: Bool = true
