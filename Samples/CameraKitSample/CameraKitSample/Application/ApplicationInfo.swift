@@ -8,6 +8,7 @@ struct ApplicationInfo {
         static let buildKey = "CFBundleVersion"
         static let versionKey = "CFBundleShortVersionString"
         static let apiToken = "SCCameraKitAPIToken"
+        static let groupId = "LensGroupId"
     }
     
     static var build: String? {
@@ -20,6 +21,9 @@ struct ApplicationInfo {
     
     static var apiToken: String? {
         return Bundle.main.infoDictionary?[Constants.apiToken] as? String
-        
+    }
+    
+    static var groupId: String? {
+        return Bundle.main.infoDictionary?[Constants.groupId] as? String
     }
 }

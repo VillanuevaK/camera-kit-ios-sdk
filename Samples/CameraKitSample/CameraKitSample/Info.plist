@@ -44,6 +44,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LensGroupId</key>
+	<string>$(LENS_GROUP_ID)</string>
 	<key>NSCameraUsageDescription</key>
 	<string>CameraKit Sample app uses the camera to show lenses</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
